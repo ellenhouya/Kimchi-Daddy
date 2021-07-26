@@ -1,0 +1,66 @@
+//- extends base
+
+//- block append head
+//-     link(rel='stylesheet' href='/css/product.css')
+//-     link(rel='stylesheet' href='/css/updateReview.css')
+
+//- block content
+//-     .all-reviews-con
+//-         .review-container.review-container-update-form
+//-             .user-info-con
+//-                 .img-box
+//-                     img(src=`/img/products/${product.imageCover}` alt=`${product.name}`)
+                   
+//-                 p= product.name
+//-             .review-info-con
+//-                 .star-date-con
+//-                     .stars(data-rating= review.rating)
+//-                         each star, starIndex in [1, 2, 3, 4, 5]
+//-                             i.fas.fa-star(data-star-id=`${starIndex +1}` class=`star-${starIndex +1} ${review.rating >= star? "": 'inactive'}` )
+
+//-                     p.post-date= `Posted on ${review.createAt ? review.createAt.toLocaleString({month: 'long', year:'numeric'}) : new Date().toLocaleString({month: 'long', year:'numeric'})}`
+
+//-                     textarea(placeholder="更新您的評論" autofocus="autofocus").review-text= review.review
+
+//-                     button.review-update-btn 更新意見
+
+
+
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/review.css')
+
+block content
+    
+    .review-container
+        .review-image-box
+            img.review-img(src=`/img/products/${product.imageCover}` alt=`${product.name} image`)
+        .review-detail-con
+            p.review-product-name #{product.name}
+            .stars(data-rating= review.rating).stars-update
+                //- each star, i in [1, 2, 3, 4, 5]
+                //-     i.fas.fa-star(data-star-id=`${i+1}` class=`star-${i+1}`)
+                each star, starIndex in [1, 2, 3, 4, 5]
+                    i.fas.fa-star(data-star-id=`${starIndex +1}` class=`star-${starIndex +1} ${review.rating >= star? "": 'inactive'}` )
+
+            
+            textarea.review-detail(placeholder='更新您的評論')= review.review
+            .review-tips-con
+                h3 填寫意見小提醒
+                .all-tips
+                    .tip
+                        i.far.fa-check-circle
+                        p
+                            | 請分享您對該產品的真實意見！資訊越詳實越好。
+                    .tip
+                        i.far.fa-check-circle
+                        p
+                            | 請勿包含您的個人資訊或挑釁字眼。
+                            
+                    .tip
+                        i.far.fa-check-circle
+                        p
+                            | 避免政治與宗教評論以及提及與產品不相關之人事物。
+            button.review-update-btn 更新評論
+

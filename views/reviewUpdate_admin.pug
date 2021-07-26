@@ -1,0 +1,57 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/product.css')
+    link(rel='stylesheet' href='/css/myReviews.css')
+    link(rel='stylesheet' href='/css/reviews.css')
+
+
+block content
+    label.sort-label Sort by 
+        select#sort-by
+            option(value='default' selected= defaultOption == 'default' ) DEFAULT
+            option(value='-rating' selected= defaultOption == '-rating' ) RATING HIGH TO LOW
+            option(value='rating' selected= defaultOption == 'rating' ) RATING LOW TO HIGH
+            option(value='-createAt'  selected= defaultOption == '-createAt' ) CREATE AT
+
+
+    label.filter-label Filter By
+        select#filter-by
+            option(value='tour' selected = defaultFilter == 'tour' )= `TOUR` 
+            option(value='user' selected = defaultFilter == 'user')= `USER`
+            option(value='rating[gt]' selected = defaultFilter == 'rating[gt]')= `RATING >`
+            option(value='rating[lt]' selected = defaultFilter == 'rating[lt]')= `RATING <`
+                input.filter-input(type="text" value= defaultNum placeholder='Object Id')
+                button.filter-btn Filter
+
+    .all-reviews-con
+        .review-container.review-container-update
+            //- if review.user
+            i.fas.fa-check-square#update-confirm-btn(data-review-id= review._id)
+            .user-info-con
+                .img-box
+                    if review.user
+                        img(src=`/img/users/${review.user.photo? review.user.photo: 'user.png'}` alt=`${review.user.name}'s photo`)
+                        p= review.user.name
+                    //- if review.user was removed
+                    else 
+                        img(src='/img/users/user.png')
+                        p 使用者不存在
+            .review-info-con
+                .star-date-con
+                    .stars(data-rating= review.rating)
+                        each star, starIndex in [1, 2, 3, 4, 5]
+                            i.fas.fa-star(data-star-id=`${starIndex + 1}` class=`star-${starIndex + 1} ${review.rating >= star? "": 'inactive'}` )
+
+                    - if (review.updatedAt)
+                        p.post-date= `Updated on ${review.updatedAt.toLocaleString({month: 'long', year:'numeric'})}`
+                    - else 
+                        p.post-date= `Posted on ${review.createdAt.toLocaleString({month: 'long', year:'numeric'})}`
+
+                textarea.review-text(rows="8" cols="45%")= review.review
+
+
+            .others-con
+                p.product-name= `${review.product.name}`
+                .product-box
+                    img(src=`/img/products/${review.product.imageCover}` alt=`${review.product.name} image`)

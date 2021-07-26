@@ -1,0 +1,25 @@
+extends base
+
+block append head 
+    link(rel='stylesheet' href='css/login.css')
+
+
+block content 
+    main.main
+        .signup-form
+            h2.heading-secondary.ma-bt-lg 申請帳戶
+            form.form.form--signup
+                .form__group
+                    label.form__label 姓名
+                    input#name--signup.form__input(required)
+                .form__group
+                    label.form__label(for='email') 電子信箱地址
+                    input#email--signup.form__input(type='email', placeholder='you@example.com', required)
+                .form__group.ma-bt-md
+                    label.form__label(for='password') 密碼
+                    input#password--signup.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group.ma-bt-md
+                    label.form__label(for='password') 確認密碼
+                    input#passwordConfirm--signup.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group
+                    button.btn.btn--green.btn--signup 申請

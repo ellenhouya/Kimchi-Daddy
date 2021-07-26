@@ -1,0 +1,67 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/product.css')
+    link(rel='stylesheet' href='/css/myReviews.css')
+    link(rel='stylesheet' href='/css/reviews.css')
+
+
+block content
+    label.sort-label Sort by 
+        select#sort-by
+            option(value='default' selected= defaultOption == 'default' ) DEFAULT
+            option(value='-rating' selected= defaultOption == '-rating' ) RATING HIGH TO LOW
+            option(value='rating' selected= defaultOption == 'rating' ) RATING LOW TO HIGH
+            option(value='-createAt'  selected= defaultOption == '-createAt' ) CREATE AT
+
+
+    label.filter-label Filter By
+        select#filter-by
+            option(value='tour' selected = defaultFilter == 'tour' )= `TOUR` 
+            option(value='user' selected = defaultFilter == 'user')= `USER`
+            option(value='rating[gt]' selected = defaultFilter == 'rating[gt]')= `RATING >`
+            option(value='rating[lt]' selected = defaultFilter == 'rating[lt]')= `RATING <`
+                input.filter-input(type="text" value= defaultNum placeholder='Object Id')
+                button.filter-btn Filter
+    .all-reviews-con.all-reviews-con_admin
+        each review, i in reviews
+            .review-container
+                i.far.fa-trash-alt.remove-review_admin(data-review-id=review.id data-order-id=review.order)
+              
+                //- if users[i]
+                a(href=`/review-update-form-admin/${review.id}`)
+                    i.far.fa-edit.fa-edit-admin
+
+                //- if users[i] was removed
+                //- else 
+                //-     i.far.fa-edit.fa-edit-admin
+ 
+                .user-info-con
+                    .img-box
+                        if users[i]
+                            img(src=`/img/users/${users[i].photo? users[i].photo: 'user.png'}` alt=`${users[i].name}'s photo`)
+                            p= users[i].name
+                        //- if users[i] was removed
+                        else 
+                            img(src='/img/users/user.png')
+                            p 使用者不存在
+                .review-info-con
+                    .star-date-con
+                        .stars(data-rating= review.rating)
+                            each star, starIndex in [1, 2, 3, 4, 5]
+                                i.fas.fa-star(data-star-id=`${i*5 +starIndex +1}` class=`star-${i*5 +starIndex +1} ${review.rating >= star? "": 'inactive'}` )
+
+                        - if (review.updatedAt)
+                            p.post-date= `Updated on ${review.updatedAt.toLocaleString({month: 'long', year:'numeric'})}`
+                        - else 
+                            p.post-date= `Posted on ${review.createdAt.toLocaleString({month: 'long', year:'numeric'})}`
+                        //- p.post-date= `Posted on ${review.createdAt ? review.createdAt.toLocaleString({month: 'long', year:'numeric'}) : new Date().toLocaleString({month: 'long', year:'numeric'})}`
+
+
+                    p.review-text= review.review
+
+
+                .others-con
+                    p.product-name= `${products[i].name}`
+                    .product-box
+                        img(src=`/img/products/${products[i].imageCover}` alt=`${products[i].name} image`)

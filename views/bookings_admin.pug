@@ -1,0 +1,67 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='css/allProducts.css')
+    link(rel='stylesheet' href='css/bookings_admin.css')
+
+
+block content
+    main#products.prodocts
+      .all-prodocuts-con.all-prodocuts-con_booking
+      
+        h1.my-orders-title= `目前有 ${orders.length} 個購買紀錄`
+       
+        each order, i in orders
+            .product-con.product-con-booking
+                .order-date-total
+                    - const dateTime = order.createdAt.toLocaleString({month: 'long', year:'numeric'}).split(',')
+                    if order.updatedAt 
+                        -const updateTime = order.updatedAt.toLocaleString({month: 'long', year:'numeric'}).split(',')
+                        p.update-date 
+                            i.fas.fa-table
+                            =`原購買日期：${dateTime[0]}`
+                            br
+                            =`購買日期：${updateTime[0]}`
+                    else
+                        p.order-date 
+                            i.fas.fa-table
+                            =`日期：${dateTime[0]}`
+                    p.order-time
+                        i.fas.fa-clock
+                        =`時間：${dateTime[1].trim()}`   
+                       
+                    .oder-total
+                        i.fas.fa-coins
+                        = `總額：${order.products.reduce((acc, ele)=> acc + ele.quantity * ele.price ,0)}`
+                    
+                    .paid
+                        i.fab.fa-paypal
+                        = `已付：${order.paid}`
+                        
+                    
+                    .edit-delete-icons-con
+                        a(href=`/update-booking/${order._id}`): i.far.fa-edit.edit-icon_admin
+                        i.far.fa-trash-alt.remove-icon_admin(data-order-id= order._id)
+
+
+                .all-orders
+                    each product in order.products
+                        .product-order
+                            a: img.product-img.product-img-order(src=`img/products/${product.image}` data-overview-img= product.image)
+                            .info-con-order     
+                                p.price= `${product.name} $${product.price} * ${product.quantity}`
+                                 - const dateTime = order.createdAt.toLocaleString({month: 'long', year:'numeric'}).split(',')
+
+                               
+                               
+                   
+
+                
+
+               
+
+
+
+       
+
+    

@@ -1,0 +1,87 @@
+body {
+  background: var(--lightBrown);
+}
+
+.customer-reviews-title {
+  margin-top: 50px;
+  color: var(--brown);
+  font-size: 25px;
+}
+
+.user-info-con {
+  width: 130px;
+  margin-left: 20px;
+}
+
+.img-box {
+  width: inherit;
+  height: 110px;
+}
+
+.img-box img {
+  width: inherit;
+  height: inherit;
+  border-radius: 5px;
+}
+
+.review-container {
+  width: 80%;
+  height: 200px;
+  margin: 30px auto;
+  /* background: var(--lightBrown); */
+  border: 1px solid rgb(169, 168, 168);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.my-reviews-product-name {
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  background: var(--brown);
+  color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  text-align: center;
+  padding: 7px 0;
+  font-size: 18px;
+}
+
+.product-review-con {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.review-info-con {
+  width: 70%;
+  justify-content: flex-start;
+}
+
+.star-date-con {
+  margin: 20px 0;
+}
+
+.stars-date-con .stars {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+.post-date {
+  font-size: 15px;
+}
+
+.fa-trash {
+  position: absolute;
+  top: 55px;
+  right: 20px;
+  font-size: 27px;
+  color: var(--brown);
+}
+
+footer {
+  position: absolute;
+}

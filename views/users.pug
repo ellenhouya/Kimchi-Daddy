@@ -1,0 +1,75 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/users.css')
+
+block content
+    -if(title === 'All Users' )
+        .sort-filter-con 
+        
+                label.sort-label Sort by 
+                    select#sort-by
+                        option(value='default' selected= defaultOption == 'default') DEFAULT
+                        option(value='email' selected= defaultOption == 'email' id='email') EMAIL
+                        option(value='name' selected= defaultOption == 'name' id='name') NAME
+
+                label.filter-label Filter By
+                    select#filter-by
+                        option(value='role' selected = defaultFilter == 'role' )= `ROLE` 
+                            input.filter-input(type="text" value= defaultNum placeholder='Text')
+                            button.filter-btn Filter
+
+        .all-users-con.users-con
+            each user, i in users  
+                .user-container         
+                    .img-box
+                        img(src=`/img/users/${user.photo? user.photo: 'default.jpg'}` alt=`${user.name}'s photo`)
+
+                    .user-info-con
+                        p= `ID: ${user.id}`
+                        p= `Name: ${user.name}`
+                        p= `Email: ${user.email}`
+                        p= `Role: ${user.role}`
+
+                    .icons-con
+                        a(href=`/user-update-form/${user.id}`)
+                            i.far.fa-edit
+                        i.far.fa-trash-alt.remove-icon
+
+    -if(title === 'Update User')            
+        form.user-container.user-container-update.img-box-update-form         
+            .img-box.img-box-update
+                img.current-img(src=`/img/users/${user_nonAdmin.photo? user_nonAdmin.photo: 'user.png'}` alt=`${user_nonAdmin.name}'s photo`)
+                label(for="photo" id='photo-label') 更新照片
+                input(type="file" name='photo' id='photo' class='photo' accept='image/*' hidden) 
+
+            .user-info-con.user-info-con-update
+                p= `ID: ${user_nonAdmin.id}`
+                .label-input-group
+                    label(for="name-input" id='name-label') 姓名：
+                    input.name-update-field(type="text" value=`${user_nonAdmin.name}` id='name-input')
+
+                .label-input-group
+                    label(for="email-input" id='email-label') 電子信箱：
+                    input.email-update-field(type="text" value=`${user_nonAdmin.email}` id='email-input') 
+
+                .label-input-group
+                    label(for="role-input" id='role-label') 使用者類別：
+                    input.role-update-field(type="text" value=`${user_nonAdmin.role}` id='role-input')
+
+            .icons-con
+                button.update-user-button       
+                    i.far.fa-check-square.update-user-button
+
+
+
+
+
+
+
+
+
+
+
+
+

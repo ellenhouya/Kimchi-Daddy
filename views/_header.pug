@@ -1,0 +1,94 @@
+mixin pickup_today()
+    option= `${ new Date().toLocaleString('en-US', {timeZone: "Asia/Shanghai", year:'numeric', month:'2-digit', day:'2-digit'})}` 
+    
+   
+  
+
+mixin pickup_daysAfter(numDays)
+     option= `${new Date(new Date().getTime() + 24 * numDays * 60 * 60 * 1000 ).toLocaleString('en-US', {timeZone: "Asia/Shanghai", year:'numeric', month:'2-digit', day:'2-digit'})}`
+
+
+block append head 
+    script(src="https://js.stripe.com/v3/")
+
+
+header.header
+    i.fas.fa-bars#hamburger-menu
+    nav.topnav
+        .header-logo-con
+            img.logo(src='/img/logo.png' alt='')
+            | Kimchi Daddy
+        .options-con
+            a.active(href='/') 首頁
+            a(href='/all-products') 產品
+            if user
+                a.nav__el.shopping-cart-header(href='#') 購物車
+                    - const qty = user.shoppingCart.reduce((acc, item)=> acc + item.quantity, 0)
+                        span.qty-hint= qty
+                    i.fas.fa-shopping-cart.fa-shopping-cart-header
+                     
+            //- -if(user) console.log(user)
+            if user 
+                a.nav__el.nav__el--logout 登出
+                a.nav__el(href='/me') 
+                    img.nav__user-img(src=`/img/users/${user.photo ? user.photo: 'default.jpg'}` )       
+            else
+                a(href='/login') 登入
+                a(href='/signup') 註冊
+                
+            
+            //- SHOPPING CART
+            .shopping-cart
+                .all-products
+                    #main
+                        if user && user.shoppingCart.length !== 0
+                            each item in user.shoppingCart
+                                .cart-item
+                                    i.fas.fa-backspace.delete-item-btn_SP(data-item-id= item._id)       
+                                    img(src=`/img/products/${item.image}` class='cart-image')
+                                    .product-info
+                                        p.product-name= `${item.name}`
+                                        p.product-price= `$${item.price}`
+                                            .qty-group 
+                                                label.qty-label(for="product-qty") 數量:
+                                                input(type="number" class=`product-qty SP_${item._id}`
+                                                data-cart-product-name= `${item.name}`
+                                                name='product-qty' value= item.quantity)
+
+                            .pickup-time-con
+                                    label.shopping-cart-label(for="pickup-time") 到店取貨時間（上午 6 點至中午 12 點）
+                                    select#pickup-time
+                                        //- option()= `${new Date().toLocaleString('en-US', {timeZone: "Asia/Shanghai"})}`   
+                                        - const dayNight = new Date().toLocaleString('en-US', {timeZone: "Asia/Shanghai", hour: '2-digit'}).split(' ')[1]
+                                        //- - console.log(currentTime)
+                                    
+                                        //- if order in the morning, start from the current day; otherwise, start from tmr
+                                        //- option()= `${dayNight === 'AM' ? new Date().toLocaleString('en-US', {timeZone: "Asia/Shanghai", year:'numeric', month:'2-digit', day:'2-digit'}) : new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toLocaleString('en-US', {timeZone: "Asia/Shanghai", year:'numeric', month:'2-digit', day:'2-digit'})}`
+                                        if dayNight==='AM'    
+                                            +pickup_today()  
+                                            +pickup_daysAfter(1)  
+                                            +pickup_daysAfter(2)
+                                        else
+                                            +pickup_daysAfter(1)  
+                                            +pickup_daysAfter(2)  
+                                            +pickup_daysAfter(3) 
+
+                                        
+
+                             
+                                    
+                if user                
+                    p.total 總金額：
+                        - const amount = user.shoppingCart.reduce((acc, item)=> acc + item.price * item.quantity, 0)
+                        span= amount
+                else 
+                    p.total 總金額：
+                        span 0 
+                    
+                .checkout-con
+                    if user
+                        button.checkout-btn#make-payment(data-user-id=`${user._id}`) 付款
+                    i.fas.fa-trash   
+        
+
+            

@@ -1,0 +1,104 @@
+extends base
+
+mixin topImage(img, summary, description)
+  li(style=`background: url(/img/products/${img})`)
+    .content
+      h2= summary
+      p= description
+
+block append head
+  link(rel='stylesheet' href='/css/product.css')
+
+
+block content
+  .container
+    ul.top-image-con(style=`background: url(/img/products/${product.imageCover}); background-repeat: no-repeat; background-size: cover;`)
+      +topImage(product.images[0], '新鮮美味', product.vegetarian? '素食': '非素食')
+      +topImage(product.images[1], '成份', `${product.ingredients.join('、')}`)
+      +topImage(product.images[2], '健康', product.summary)
+
+    .layer
+      .left-layer
+      .right-layer
+    .product-detail-con
+      h1 
+        span.product-name= product.name
+        br
+        span.product-summary= product.summary
+      button.favorite  加入清單
+        i.fas.fa-heart
+      .detail-con
+        .info-left   
+          p 
+            i.fas.fa-dollar-sign 
+            span 價格：#{product.price}    
+          p 
+            i.fas.fa-seedling 
+            span #{product.vegetarian?'素食' : '非素食'}
+          p 
+            i.fas.fa-cookie 
+            span 成份：#{product.ingredients.join('、')}
+
+          .quantity-con
+            label(for='qty-input') 數量
+            input(type='number' id='qty-input' value=1 name='qty-input')
+            button.add-to-cart-btn(data-id=`${product._id}` data-price=`${product.price}` data-imageCover =`${product.imageCover}` data-name=`${product.name}`) 加入購物車
+              i.fas.fa-shopping-cart
+        .info-right
+          p= product.description
+
+    .customer-reviews-con
+      .customer-reviews-title-con
+        span.left-line
+        if reviews.length > 0
+          span.customer-reviews-title= `顧客評價`
+          //- 
+          .star-date-con
+            .stars
+              each star, starIndex in [1, 2, 3, 4, 5]
+                i.fas.fa-star(data-star-id=`${starIndex +1}` class=`star-${starIndex +1} ${product.ratingsAverage >= star? "": 'inactive'}` )
+              | 
+              = `(${product.ratingsAverage})`
+          //- 
+        span.right-line
+
+      .all-reviews-con
+        each review, i in reviews
+          .review-container
+            .user-info-con
+              .img-box
+                if users[i]
+                  img(src=`/img/users/${users[i].photo? users[i].photo: 'user.png'}` alt=`${users[i].name}'s photo`)
+                    //- if we delete the user, users[i] will not exist
+                else
+                  img(src='/img/users/user.png') 
+
+              if users[i]
+                p= users[i].name
+              else 
+                p 使用者不存在
+
+            .review-info-con
+              .star-date-con
+                .stars
+                  each star, starIndex in [1, 2, 3, 4, 5]
+                    i.fas.fa-star(data-star-id=`${i*5 +starIndex +1}` class=`star-${i*5 +starIndex +1} ${review.rating >= star? "": 'inactive'}` )
+
+              - if (review.updatedAt)
+                p.post-date= `Updated on ${review.updatedAt.toLocaleString({month: 'long', year:'numeric'})}`
+              - else 
+                p.post-date= `Posted on ${review.createdAt.toLocaleString({month: 'long', year:'numeric'})}`
+
+
+              div.review-text= review.review
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+.edit-delete-icons-con {
+  width: 12%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.edit-icon_admin,
+.remove-icon_admin {
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.edit-icon_admin {
+  color: #fff;
+}
+
+.confirm-edit-icon_admin {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.order-date-total input,
+.info-con-order input {
+  width: 100px;
+  padding: 3px 5px;
+  outline: 0;
+}
+
+.options-menu {
+  padding: 3px 5px;
+  outline: 0;
+}
+
+.update-product-order_admin {
+  position: relative;
+}
+
+.update-product-order_admin .remove-order-item {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  font-size: 20px;
+  color: var(--brown);
+}
+
+.order-date-input {
+  width: 210px !important;
+  font-family: Arial, Helvetica, sans-serif;
+}

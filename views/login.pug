@@ -1,0 +1,22 @@
+extends base
+
+block append head 
+    link(rel='stylesheet' href='css/login.css')
+
+block content
+  .alert
+    
+    
+  main.main
+    .login-form
+      h2.heading-secondary.ma-bt-lg 登入帳戶
+      form.form.form--login
+        .form__group
+          label.form__label(for='email') 電子信件地址
+          input#email.form__input(type='email', placeholder='you@example.com', required)
+        .form__group.ma-bt-md
+          label.form__label(for='password') 密碼
+          input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+        .form__group.login-btn-forgot-password
+          button.btn.btn--green 登入
+          a(href='/forgot-password').forgotPassword-link 忘記密碼？

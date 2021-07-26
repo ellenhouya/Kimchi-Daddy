@@ -1,0 +1,70 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/manageProducts.css')
+  
+
+block content
+    .manage-products-con
+        .manage-products-title-con
+            span.left-line
+
+            h1.product-reviews-title= `目前有 ${products.length} 項產品`
+                a(href='/add-product-form')#add-product-btn 增加產品
+               
+
+            span.right-line
+
+        .all-products-con
+            each product, i in products
+                .product-container
+                    div(id=`product-delete-btn-${i + 1}` class='product-delete-btn')
+                        i.fas.fa-trash
+                    input.product-name-input(value= product.name)
+                    //- i.fas.fa-edit#fa-edit-update-product(data-product-id=product._id)
+
+                    form.product-con_admin(data-product-id=product._id)
+                        button(id=`product-update-btn-${i + 1}`)
+                            i.fas.fa-edit
+                        .product-input-con  
+                            -const coverIndex = i + 1
+                            -const imageIndex1 = i+1 + i*2
+                            -const imageIndex2 = i+2 + i*2
+                            -const imageIndex3 = i+3 + i*2
+                            .img-label-input-group
+                                img.product-img-cover(src=`/img/products/${product.imageCover}`)
+                                label(for=`imageCover-${coverIndex}`)= `Image Cover ${coverIndex}`
+                                input(type="file" accept='image/*' name='imageCover' id=`imageCover-${coverIndex}` hidden)
+
+                            .img-label-input-group
+                                img.product-img(src=`/img/products/${product.images[0]}`)
+                                label(for=`image-${imageIndex1}`)= `Image ${imageIndex1}`
+                                input(type="file" name='images_1' id=`image-${imageIndex1}` hidden)
+
+                            .img-label-input-group
+                                img.product-img(src=`/img/products/${product.images[1]}`)
+                                label(for=`image-${imageIndex2}`)= `Image ${imageIndex2}`
+                                input(type="file" name='images_2' id=`image-${imageIndex2}` hidden)
+
+                            .img-label-input-group
+                                img.product-img(src=`/img/products/${product.images[2]}`)
+                                label(for=`image-${imageIndex3}`)= `Image ${imageIndex3}`
+                                input(type="file" name='images_3' id=`image-${imageIndex3}` hidden)
+
+
+                        .product-info-con
+                            .label-group
+                                label 英文：
+                                label.ingredients-label 成份：
+                                label.price-label 價格：
+                                label.summary-label 總結： 
+                                label.description-label 描述：
+                                label.vegetarian-label 素食：  
+                            .input-grouop
+                                input.eng(value= product.eng)
+                                textarea.ingredients(rows="3" cols="80%")= product.ingredients
+                                input.price(value= product.price)
+                                textarea.summary(rows="8" cols="80%")= product.summary
+                                textarea.description(rows="8" cols="80%")= product.description
+                                input.vegetarian(value= product.vegetarian.toString())
+                           

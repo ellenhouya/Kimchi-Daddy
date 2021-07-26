@@ -1,0 +1,47 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/product.css')
+    link(rel='stylesheet' href='/css/myReviews.css')
+
+
+block content
+    .customer-reviews-con
+        .customer-reviews-title-con
+            span.left-line
+            
+            h1.customer-reviews-title#customer-reviews-title= `目前有 ${reviews.length} 則評論`
+           
+            span.right-line
+
+        .all-reviews-con
+            each review, i in reviews
+                .review-container.my-reviews-container
+                    p.my-reviews-product-name= products[i].name
+                    i.fas.fa-trash(data-review-id=review._id data-order-id=review.order)
+
+                    .product-review-con
+                        .user-info-con
+                            .img-box
+                                img(src=`/img/products/${products[i].imageCover}` alt=`${products[i].name}'s photo`)
+                                //- p= products[i].name
+                        .review-info-con
+                            .star-date-con
+                                .stars-date-con
+                                    .stars
+                                        - if (title === 'My Reviews' || title === 'All Reviews')
+                                            each star in [1, 2, 3, 4, 5]
+                                                i.fas.fa-star(class=`${review.rating >= star? "": 'inactive'}`)
+                                        - else
+                                            each star, starIndex in [1, 2, 3, 4, 5]
+                                                i.fas.fa-star(data-star-id=`${i*5 +starIndex +1}` class=`star-${i*5 +starIndex +1} ${review.rating >= star? "": 'inactive'}` )
+
+                                - if (review.updatedAt)
+                                    p.post-date= `Updated on ${review.updatedAt.toLocaleString({month: 'long', year:'numeric'})}`
+                                - else 
+                                    p.post-date= `Posted on ${review.createdAt.toLocaleString({month: 'long', year:'numeric'})}`
+
+                        
+                            p.review-text= review.review
+                        //- - else 
+                        //-     div.review-text= review.review

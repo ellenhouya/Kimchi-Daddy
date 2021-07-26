@@ -1,0 +1,74 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='css/account.css')
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active'  : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content 
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('#', '設置', 'settings', true)
+                    +navItem('/orders', '購買紀錄 / 填寫評論', 'briefcase')
+                    +navItem('/my-reviews', '我的評論', 'star')
+                    +navItem('/my-favorite-products', '我的清單', 'heart')
+
+                //- user comes from authController.js line 201
+                - if (user.role === 'admin') 
+                    .admin-nav
+                        h5.admin-nav__heading 管理
+                        ul.side-nav
+                            +navItem('/manage-products', '管理產品', 'map')
+                            +navItem('/manage-users', '管理使用者', 'users')
+                            +navItem('/manage-reviews', '管理評論', 'star')
+                            +navItem('/manage-bookings', '管理購買紀錄', 'briefcase')
+
+            .user-view__content
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md 您的帳戶設置
+                    
+                    //- Without API
+                    //- form.form.form-user-data(action='/submit-user-data' method='POST' enctype='multipart/form-data')
+
+                    //- With API
+                    form.form.form-user-data.form-user-data_account
+                        .form__group
+                            label.form__label(for='name') 名字
+                            input#name.form__input(type='text', value=`${user.name}`, required, name='name')
+                        .form__group.ma-bt-md
+                            label.form__label(for='email') 電子信件地址
+                            input#email.form__input(type='email', value=`${user.email}`, required, name='email')
+                        .form__group.form__photo-upload
+                            img.form__user-photo(src=`/img/users/${user.photo ? user.photo : 'user.png'}` )
+                            
+                            input.form__upload(type='file' accept='image/*', id='photo', name='photo')
+                            //- connect with id photo
+                            //- when we click the label, it will activate the input, which in turn will open up a window from which we can select a file
+                            label(for='photo') 選擇新照片
+                        
+
+                        .form__group.right
+                            button.btn.btn--small.btn--green 儲存設置
+
+                .line &nbsp;
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md 更改密碼
+                    form.form.form-user-password
+                        .form__group
+                            label.form__label(for='password-current') 目前密碼
+                            input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group
+                            label.form__label(for='password') 新密碼
+                            input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group.ma-bt-lg
+                            label.form__label(for='password-confirm') 確認密碼
+                            input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group.right
+                            button.btn.btn--small.btn--green.btn--save-password 儲存密碼

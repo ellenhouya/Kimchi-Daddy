@@ -1,0 +1,17 @@
+extends baseEmail
+
+block content
+    p 哈囉 #{firstName},
+    p 感謝您註冊成為泡菜老爹的會員。
+    p 除了線上訂購我們的早餐與泡菜，您也可以至我們的實體店面購買。
+    table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+        tbody
+            tr
+                td(align='left')
+                    table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                        tbody
+                            tr
+                                td
+                                    a(href=`${url}`, target='_blank') 我的帳戶
+    p 如果您有任何疑問，請聯絡我們，我們很樂意為您提供服務。
+    p - 泡菜老爹

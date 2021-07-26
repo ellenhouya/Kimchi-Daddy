@@ -1,0 +1,56 @@
+extends base
+
+
+
+block append head 
+    link(rel='stylesheet' href='/css/manageProducts.css')
+    //- link(rel='stylesheet' href='/css/addProduct.css')
+
+
+block content
+    .create-product-con
+        .all-products-con
+            .product-container
+                input.product-name-input(value= '產品名稱')
+                //- i.fas.fa-edit#fa-edit-update-product(data-product-id=product._id)
+
+                form.add-product-con_admin
+                    button#add-product-submission
+                        i.fas.fa-plus-square
+                    .product-input-con  
+                        .img-label-input-group_add
+                            img.product-img-cover(src='/img/products/product-1-2.jpeg' style='opacity:0.6')
+                            label(for='imageCover_add')= 'Image Cover 1'
+                            input(type="file" accept='image/*' name='imageCover' id='imageCover_add' class='add-product-img-input'  hidden)
+
+                        .img-label-input-group_add
+                            img.product-img(src='/img/products/product-1-2.jpeg' style='opacity:0.6')
+                            label(for='image-1_add')= 'Image 1'
+                            input(type="file" name='images_1' id='image-1_add' class='add-product-img-input' hidden)
+
+                        .img-label-input-group_add
+                            img.product-img(src='/img/products/product-1-2.jpeg' style='opacity:0.6')
+                            label(for='image-2_add')= 'Image 2'
+                            input(type="file" name='images_1' id='image-2_add' class='add-product-img-input' hidden)
+
+                        .img-label-input-group_add
+                            img.product-img(src='/img/products/product-1-2.jpeg' style='opacity:0.6')
+                            label(for='image-3_add')= 'Image 3'
+                            input(type="file" name='images_1' id='image-3_add' class='add-product-img-input' hidden)
+
+
+                    .product-info-con
+                        .label-group
+                            label 英文：
+                            label.ingredients-label 成份：
+                            label.price-label 價格：
+                            label.summary-label 總結： 
+                            label.description-label 描述：
+                            label.vegetarian-label 素食：  
+                        .input-grouop
+                            input.eng
+                            textarea.ingredients(rows="3" cols="80%")
+                            input.price
+                            textarea.summary(rows="8" cols="80%")
+                            textarea.description(rows="8" cols="80%")
+                            input.vegetarian

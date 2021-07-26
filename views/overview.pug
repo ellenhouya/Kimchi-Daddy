@@ -1,0 +1,96 @@
+extends base
+
+block append head
+    link(rel='stylesheet' href='/css/allProducts.css')
+
+block content
+    if title === 'My Favorite Products'
+        h1.favorite-products-title= `我的清單：${products.length} 件商品`
+
+    if title === 'All Products'
+        .search-field
+        input.search-input(type='text' placeholder='輸入關鍵字搜尋')
+     
+
+    main#products.products
+      .all-products-con(class= title === 'My Favorite Products'? 'all-products-con-favorite' : '')
+        each product, i in products
+            .product-con
+                a(href=`/product/${product.eng}`): img.product-img(src=`/img/products/${product.imageCover}` class= product.eng data-overview-img= product.imageCover)
+                p.name= product.name       
+                p.price= `${product.price}元 / 個`
+                .add-to-cart(class=`${product.id}` data-logged-in= user? 'true' : 'false') 加入購物車
+                if title === 'My Favorite Products'
+                    .delete-favorite-product
+                        i.fas.fa-backspace
+    
+    .sort-filter-btn 排列篩選
+    .sort-filter-container
+        .sort-con
+            h3.sort-title 排列
+            .sort-detail-con
+                .checkbox-option-con-sort
+                    input(type="radio" name='sort-by' data-condition='price' id='sort-by_price-input') 
+                    label(for='sort-by_price-input') 價格低至高
+                    
+                .checkbox-option-con-sort
+                    input(type="radio" name='sort-by' data-condition='-price' id='sort-by_-price-input') 
+                    label(for='sort-by_-price-input') 價格高至低
+                  
+                .checkbox-option-con-sort
+                    input(type="radio" name='sort-by' data-condition='-ratingsAverage' id='sort-by_ratingsAverage-input')    
+                    label(for='sort-by_ratingsAverage-input') 評價
+                   
+        .filter-con
+            h3.filter-title 篩選  
+            .filter-title-option-group
+                h4 價格
+                .price-filter-detail
+                    .checkbox-option-con-filter
+                        input(type="radio" name='filter-by-price' data-condition='price[lte]=20' id='filter-by-price_20')     
+                        label(for='filter-by-price_20') 20 元
+
+                    .checkbox-option-con-filter
+                        input(type="radio" name='filter-by-price' data-condition='price[lte]=30' id='filter-by-price_30')    
+                        label(for='filter-by-price_30') 30 元
+
+                    .checkbox-option-con-filter
+                        input(type="radio" name='filter-by-price' data-condition='price[lte]=40' id='filter-by-price_40')      
+                        label(for='filter-by-price_40') 40 元
+                   
+      
+            .filter-title-option-group  
+                h4 素食
+                .vegetarian-filter-detail
+                    .checkbox-option-con-filter
+                            input(type="radio" name='filter-by-vegetarian' data-condition='vegetarian=true' id='filter-by-vege_true')      
+                            label(for='filter-by-vege_true') 是
+                    .checkbox-option-con-filter
+                            input(type="radio" name='filter-by-vegetarian' data-condition='vegetarian=false' id='filter-by-vege_false')     
+                            label(for='filter-by-vege_false') 否
+
+
+        .filter-sort-btns-con
+            button.clear-filter-sort-btn 
+                a(href='/all-products').default-btn 原設定值
+            button.apply-filter-sort-btn
+                a.filter-sort-link 篩選
+  
+        
+
+       
+
+ 
+           
+            
+
+         
+
+                  
+
+
+               
+
+       
+
+    

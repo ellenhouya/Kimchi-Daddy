@@ -1,0 +1,41 @@
+extends base
+
+block append head
+ link(rel='stylesheet' href='css/homepage.css')
+ link(rel="stylesheet", href="css/jarallax.css")
+ script(src="js/jarallax.js")
+ script(src="js/jarallax-element.js")
+ script(src='js/homepage.js' defer)
+
+
+block content
+    //- BK LAYER
+    .layer
+        .left-layer
+        .right-layer
+
+    .slide-con
+      .slide.slide1
+        span.slide-1-text 美好的一天從早餐開始
+        br
+        span.slide-1-text-eng A healthy start to the day.
+      #slide.slide.slide2
+        span.slide-2-text 泡菜老爹招牌蛋餅
+        br
+        span.slide-2-text-eng Kimchi Daddy's Signature Omelette
+
+    
+    .body-layer
+    each product, index in products
+
+        section.slide-section(class=`slide-${index +1}`) 
+            div(class=`box box${index + 1}`)
+                h2(data-jarallax-element=`0 ${index%2 === 0? 200: -200}`)=`${product.name}`
+                    
+                div(class=`container container${index + 1}`)
+                    a(href=`/product/${product.eng}`) 
+                        .imgBx.jarallax                    
+                            img.jarallax-img(src=`/img/products/${product.imageCover}`)
+
+                    .content(data-jarallax-element=`0 ${index % 2 === 0? 200: -200}`)
+                        p=`${product.description}`

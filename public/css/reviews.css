@@ -1,0 +1,48 @@
+.review-container {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 70px 30px 30px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  border: 0;
+}
+
+.review-container-update {
+  height: 30%;
+  margin-top: 15%;
+}
+
+.review-container:last-of-type {
+  margin-bottom: 150px;
+}
+
+/* .user-info-con .img-box {
+  border-radius: 50%;
+} */
+
+.user-info-con .img-box img {
+  height: 130px;
+  border-radius: 50%;
+}
+
+.product-box img {
+  border-radius: 5px;
+}
+
+.others-con .product-name {
+  margin-bottom: 10px;
+}
+
+.others-con .product-box {
+  width: 130px;
+  height: 110px;
+}
+
+.fa-check-square {
+  color: var(--brown);
+  margin-right: -20px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+}
